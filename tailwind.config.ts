@@ -13,7 +13,27 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        display: ['"Plus Jakarta Sans"', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
       colors: {
+        ink: {
+          DEFAULT: "hsl(var(--ink))",
+          soft: "hsl(var(--ink-soft))",
+        },
+        brand: {
+          green: {
+            DEFAULT: "hsl(var(--brand-green))",
+            foreground: "hsl(var(--brand-green-foreground))",
+            soft: "hsl(var(--brand-green-soft))",
+          },
+          amber: {
+            DEFAULT: "hsl(var(--brand-amber))",
+            foreground: "hsl(var(--brand-amber-foreground))",
+            soft: "hsl(var(--brand-amber-soft))",
+          },
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

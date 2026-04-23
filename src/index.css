@@ -8,8 +8,19 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 40 33% 98%;
+    --foreground: 220 18% 12%;
+
+    --brand-green: 159 70% 36%;
+    --brand-green-foreground: 0 0% 100%;
+    --brand-green-soft: 159 60% 94%;
+
+    --brand-amber: 35 87% 54%;
+    --brand-amber-foreground: 220 18% 12%;
+    --brand-amber-soft: 35 95% 95%;
+
+    --ink: 220 18% 12%;
+    --ink-soft: 220 12% 38%;
 
     --card: 0 0% 100%;
     --card-foreground: 222.2 84% 4.9%;
@@ -17,8 +28,8 @@ All colors MUST be HSL.
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 159 70% 36%;
+    --primary-foreground: 0 0% 100%;
 
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -100,6 +111,10 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "ss01", "cv11";
+  }
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
   }
 }
