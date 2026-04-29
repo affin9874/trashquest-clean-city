@@ -5,6 +5,7 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
+  base: '/trashquest-clean-city/',
   server: {
     host: "::",
     port: 8080,
@@ -20,7 +21,3 @@ export default defineConfig(({ mode }) => ({
     dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime", "@tanstack/react-query", "@tanstack/query-core"],
   },
 }));
-export default defineConfig({
-  base: '/trashquest-clean-city/',
-  // ... ส่วนอื่นๆ เดิม
-})
