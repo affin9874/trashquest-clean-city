@@ -21,6 +21,6 @@ export default defineConfig(({ mode }) => ({
   },
 }));
 export default defineConfig({
-  base: '/ชื่อ-repo-ของคุณ/',
+  base: '/trashquest-clean-city/',
   // ... ส่วนอื่นๆ เดิม
 })
