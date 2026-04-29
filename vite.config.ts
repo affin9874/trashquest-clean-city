@@ -20,3 +20,7 @@ export default defineConfig(({ mode }) => ({
     dedupe: ["react", "react-dom", "react/jsx-runtime", "react/jsx-dev-runtime", "@tanstack/react-query", "@tanstack/query-core"],
   },
 }));
+export default defineConfig({
+  base: '/ชื่อ-repo-ของคุณ/',
+  // ... ส่วนอื่นๆ เดิม
+})
