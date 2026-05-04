@@ -14,16 +14,222 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          display_name: string | null
+          id: string
+          level: number
+          total_points: number
+          total_reports: number
+          updated_at: string
+          username: string | null
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id: string
+          level?: number
+          total_points?: number
+          total_reports?: number
+          updated_at?: string
+          username?: string | null
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          display_name?: string | null
+          id?: string
+          level?: number
+          total_points?: number
+          total_reports?: number
+          updated_at?: string
+          username?: string | null
+        }
+        Relationships: []
+      }
+      report_photos: {
+        Row: {
+          ai_confidence: number | null
+          ai_description: string | null
+          created_at: string
+          detected_type: Database["public"]["Enums"]["trash_type"] | null
+          display_order: number
+          id: string
+          is_valid_trash: boolean | null
+          public_url: string
+          report_id: string
+          storage_path: string
+        }
+        Insert: {
+          ai_confidence?: number | null
+          ai_description?: string | null
+          created_at?: string
+          detected_type?: Database["public"]["Enums"]["trash_type"] | null
+          display_order?: number
+          id?: string
+          is_valid_trash?: boolean | null
+          public_url: string
+          report_id: string
+          storage_path: string
+        }
+        Update: {
+          ai_confidence?: number | null
+          ai_description?: string | null
+          created_at?: string
+          detected_type?: Database["public"]["Enums"]["trash_type"] | null
+          display_order?: number
+          id?: string
+          is_valid_trash?: boolean | null
+          public_url?: string
+          report_id?: string
+          storage_path?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "report_photos_report_id_fkey"
+            columns: ["report_id"]
+            isOneToOne: false
+            referencedRelation: "reports"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reports: {
+        Row: {
+          address: string | null
+          ai_rejection_reason: string | null
+          ai_summary: string | null
+          created_at: string
+          estimated_items: number
+          id: string
+          latitude: number
+          longitude: number
+          note: string | null
+          photo_count: number
+          points_awarded: number
+          primary_trash_type: Database["public"]["Enums"]["trash_type"] | null
+          status: Database["public"]["Enums"]["report_status"]
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address?: string | null
+          ai_rejection_reason?: string | null
+          ai_summary?: string | null
+          created_at?: string
+          estimated_items?: number
+          id?: string
+          latitude: number
+          longitude: number
+          note?: string | null
+          photo_count?: number
+          points_awarded?: number
+          primary_trash_type?: Database["public"]["Enums"]["trash_type"] | null
+          status?: Database["public"]["Enums"]["report_status"]
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: string | null
+          ai_rejection_reason?: string | null
+          ai_summary?: string | null
+          created_at?: string
+          estimated_items?: number
+          id?: string
+          latitude?: number
+          longitude?: number
+          note?: string | null
+          photo_count?: number
+          points_awarded?: number
+          primary_trash_type?: Database["public"]["Enums"]["trash_type"] | null
+          status?: Database["public"]["Enums"]["report_status"]
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      trash_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          icon: string | null
+          id: string
+          name_en: string
+          name_th: string
+          points_per_item: number
+          type: Database["public"]["Enums"]["trash_type"]
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name_en: string
+          name_th: string
+          points_per_item?: number
+          type: Database["public"]["Enums"]["trash_type"]
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          icon?: string | null
+          id?: string
+          name_en?: string
+          name_th?: string
+          points_per_item?: number
+          type?: Database["public"]["Enums"]["trash_type"]
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
+      report_status: "pending" | "analyzing" | "approved" | "rejected"
+      trash_type:
+        | "plastic"
+        | "paper"
+        | "glass"
+        | "metal"
+        | "organic"
+        | "hazardous"
+        | "electronic"
+        | "general"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +356,19 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+      report_status: ["pending", "analyzing", "approved", "rejected"],
+      trash_type: [
+        "plastic",
+        "paper",
+        "glass",
+        "metal",
+        "organic",
+        "hazardous",
+        "electronic",
+        "general",
+      ],
+    },
   },
 } as const
