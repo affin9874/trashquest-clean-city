@@ -1,47 +1,23 @@
 import { Button } from "@/components/ui/button";
 import {
-  Trash2,
-  Wind,
-  Frown,
-  MapPin,
-  Trophy,
-  ScanLine,
-  Camera,
-  CheckCircle2,
-  Gift,
-  Users,
-  Building2,
-  Play,
-  Download,
-  Leaf,
-  ArrowRight,
+  Trash2, Wind, Frown, MapPin, Trophy, ScanLine, Camera, CheckCircle2,
+  Gift, Users, Building2, Play, Download, Leaf, ArrowRight,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import { AppHeader } from "@/components/AppHeader";
+import { useAuth } from "@/contexts/AuthContext";
 import heroPhone from "@/assets/hero-phone.png";
 import solMap from "@/assets/sol-map.png";
 import solGame from "@/assets/sol-game.png";
 import solAi from "@/assets/sol-ai.png";
 
 const Index = () => {
+  const { user } = useAuth();
+  const startHref = user ? "/report" : "/auth";
   return (
     <div className="min-h-screen bg-background text-ink">
-      {/* NAV */}
-      <header className="border-b border-ink/10">
-        <div className="container flex h-16 items-center justify-between">
-          <a href="#" className="flex items-center gap-2 font-display text-xl font-extrabold">
-            <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand-green text-brand-green-foreground">
-              <Leaf className="h-5 w-5" />
-            </span>
-            TrashQuest
-          </a>
-          <nav className="hidden items-center gap-8 text-sm font-medium text-ink-soft md:flex">
-            <a href="#problem" className="hover:text-ink">ปัญหา</a>
-            <a href="#solution" className="hover:text-ink">ทางออก</a>
-            <a href="#how" className="hover:text-ink">วิธีใช้</a>
-            <a href="#impact" className="hover:text-ink">Impact</a>
-          </nav>
-          <Button variant="hero" size="default">เริ่มภารกิจ</Button>
-        </div>
-      </header>
+      <AppHeader />
+
 
       {/* HERO */}
       <section className="relative overflow-hidden">
@@ -64,12 +40,16 @@ const Index = () => {
               <span className="font-semibold text-ink">Breathe better air.</span>
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button variant="hero" size="xl">
-                เริ่มภารกิจ <ArrowRight />
-              </Button>
-              <Button variant="ghostInk" size="xl">
-                <Play /> ดูวิดีโอ
-              </Button>
+              <Link to={startHref}>
+                <Button variant="hero" size="xl">
+                  เริ่มภารกิจ <ArrowRight />
+                </Button>
+              </Link>
+              <Link to="/leaderboard">
+                <Button variant="ghostInk" size="xl">
+                  <Trophy /> ดูอันดับ
+                </Button>
+              </Link>
             </div>
             <div className="mt-10 flex items-center gap-6 text-sm text-ink-soft">
               <div className="flex -space-x-2">
@@ -343,16 +323,20 @@ const Index = () => {
             Join 80,000+ people turning their cities cleaner — one piece of trash at a time.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Button variant="amber" size="xl">
-              <Download /> ดาวน์โหลดแอป
-            </Button>
-            <Button
-              variant="outline"
-              size="xl"
-              className="border-2 border-brand-green-foreground/30 bg-transparent text-brand-green-foreground hover:bg-brand-green-foreground/10 hover:text-brand-green-foreground"
-            >
-              สำหรับองค์กร / พาร์ตเนอร์
-            </Button>
+            <Link to={startHref}>
+              <Button variant="amber" size="xl">
+                <Camera /> เริ่มรายงานขยะ
+              </Button>
+            </Link>
+            <Link to="/leaderboard">
+              <Button
+                variant="outline"
+                size="xl"
+                className="border-2 border-brand-green-foreground/30 bg-transparent text-brand-green-foreground hover:bg-brand-green-foreground/10 hover:text-brand-green-foreground"
+              >
+                <Trophy /> Leaderboard
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
