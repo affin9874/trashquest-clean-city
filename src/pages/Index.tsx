@@ -40,12 +40,16 @@ const Index = () => {
               <span className="font-semibold text-ink">Breathe better air.</span>
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button variant="hero" size="xl">
-                เริ่มภารกิจ <ArrowRight />
-              </Button>
-              <Button variant="ghostInk" size="xl">
-                <Play /> ดูวิดีโอ
-              </Button>
+              <Link to={startHref}>
+                <Button variant="hero" size="xl">
+                  เริ่มภารกิจ <ArrowRight />
+                </Button>
+              </Link>
+              <Link to="/leaderboard">
+                <Button variant="ghostInk" size="xl">
+                  <Trophy /> ดูอันดับ
+                </Button>
+              </Link>
             </div>
             <div className="mt-10 flex items-center gap-6 text-sm text-ink-soft">
               <div className="flex -space-x-2">
@@ -319,16 +323,20 @@ const Index = () => {
             Join 80,000+ people turning their cities cleaner — one piece of trash at a time.
           </p>
           <div className="mt-10 flex flex-wrap justify-center gap-4">
-            <Button variant="amber" size="xl">
-              <Download /> ดาวน์โหลดแอป
-            </Button>
-            <Button
-              variant="outline"
-              size="xl"
-              className="border-2 border-brand-green-foreground/30 bg-transparent text-brand-green-foreground hover:bg-brand-green-foreground/10 hover:text-brand-green-foreground"
-            >
-              สำหรับองค์กร / พาร์ตเนอร์
-            </Button>
+            <Link to={startHref}>
+              <Button variant="amber" size="xl">
+                <Camera /> เริ่มรายงานขยะ
+              </Button>
+            </Link>
+            <Link to="/leaderboard">
+              <Button
+                variant="outline"
+                size="xl"
+                className="border-2 border-brand-green-foreground/30 bg-transparent text-brand-green-foreground hover:bg-brand-green-foreground/10 hover:text-brand-green-foreground"
+              >
+                <Trophy /> Leaderboard
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
