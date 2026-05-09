@@ -60,10 +60,14 @@ const Auth = () => {
   const handleGoogle = async () => {
     setLoading(true);
     const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-    const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin + base + "/dashboard" });
-    if (result.error) { toast.error("เข้าสู่ระบบ Google ไม่สำเร็จ"); setLoading(false); return; }
-    if (result.redirected) return;
-    navigate("/dashboard");
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin + base + "/dashboard",
+        queryParams: { prompt: "select_account" },
+      },
+    });
+    if (error) { toast.error("เข้าสู่ระบบ Google ไม่สำเร็จ: " + error.message); setLoading(false); }
   };
 
   return (
