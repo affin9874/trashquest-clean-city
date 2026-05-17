@@ -13,7 +13,7 @@ import { toast } from "sonner";
 
 type Pic = { file: File; preview: string };
 
-const MAX = 4; const MIN = 3;
+const MAX = 3; const MIN = 2;
 const ReportPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
