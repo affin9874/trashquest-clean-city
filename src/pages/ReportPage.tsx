@@ -6,14 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AppHeader } from "@/components/AppHeader";
-import { Camera, MapPin, Trash2, Sparkles, X, Loader2 } from "lucide-react";
+import { Camera, ImagePlus, MapPin, Trash2, Sparkles, X, Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 
 type Pic = { file: File; preview: string };
 
-const MAX = 3; const MIN = 2;
+const MAX = 4; const MIN = 2;
+
 const ReportPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -53,7 +54,6 @@ const ReportPage = () => {
 
     setSubmitting(true);
     try {
-      // 1) Insert report row
       const { data: report, error: rErr } = await supabase.from("reports").insert({
         user_id: user.id,
         latitude: coords.lat,
@@ -65,7 +65,6 @@ const ReportPage = () => {
       }).select().single();
       if (rErr || !report) throw rErr ?? new Error("create report failed");
 
-      // 2) Upload photos
       const photoRows: any[] = [];
       for (let i = 0; i < pics.length; i++) {
         const ext = pics[i].file.name.split(".").pop()?.toLowerCase() || "jpg";
@@ -80,7 +79,6 @@ const ReportPage = () => {
       const { error: phErr } = await supabase.from("report_photos").insert(photoRows);
       if (phErr) throw phErr;
 
-      // 3) Trigger AI analysis
       toast.loading("AI กำลังวิเคราะห์...", { id: "ai" });
       const { data: ai, error: aiErr } = await supabase.functions.invoke("analyze-trash", { body: { reportId: report.id } });
       toast.dismiss("ai");
@@ -112,7 +110,7 @@ const ReportPage = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2"><Camera className="h-5 w-5 text-brand-green" />รูปขยะ ({pics.length}/{MAX})</CardTitle>
-            <CardDescription>ถ่ายให้เห็นกองขยะชัดเจน อย่างน้อย {MIN} ใบ</CardDescription>
+            <CardDescription>ถ่ายหรืออัปโหลดรูปขยะให้ชัดเจน อย่างน้อย {MIN} ใบ</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-3 gap-2 sm:grid-cols-5">
@@ -125,12 +123,21 @@ const ReportPage = () => {
                 </div>
               ))}
               {pics.length < MAX && (
-                <label className="grid aspect-square cursor-pointer place-items-center rounded-xl border-2 border-dashed border-ink/20 text-ink-soft hover:border-brand-green hover:text-brand-green">
-                  <input type="file" accept="image/*" capture="environment" multiple className="hidden" onChange={(e) => onFiles(e.target.files)} />
-                  <Camera className="h-7 w-7" />
-                </label>
+                <div className="flex flex-col gap-2">
+                  {/* ปุ่มถ่ายรูป */}
+                  <label className="grid aspect-square cursor-pointer place-items-center rounded-xl border-2 border-dashed border-ink/20 text-ink-soft hover:border-brand-green hover:text-brand-green">
+                    <input type="file" accept="image/*" capture="environment" multiple className="hidden" onChange={(e) => onFiles(e.target.files)} />
+                    <Camera className="h-7 w-7" />
+                  </label>
+                  {/* ปุ่มอัปโหลดจาก Gallery */}
+                  <label className="grid aspect-square cursor-pointer place-items-center rounded-xl border-2 border-dashed border-ink/20 text-ink-soft hover:border-brand-green hover:text-brand-green">
+                    <input type="file" accept="image/*" multiple className="hidden" onChange={(e) => onFiles(e.target.files)} />
+                    <ImagePlus className="h-7 w-7" />
+                  </label>
+                </div>
               )}
             </div>
+            <p className="mt-2 text-xs text-ink-soft">📷 ถ่ายรูป หรือ 🖼️ อัปโหลดจากแกลเลอรี่ได้เลย</p>
           </CardContent>
         </Card>
 
