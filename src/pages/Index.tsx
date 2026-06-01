@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
 import {
   Trash2, Wind, Frown, MapPin, Trophy, ScanLine, Camera, CheckCircle2,
-  Gift, Users, Building2, Play, Download, Leaf, ArrowRight,
+  Gift, Users, Building2, Play, Download, Leaf, ArrowRight, Map as MapIcon,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { toast } from "sonner";
 import { AppHeader } from "@/components/AppHeader";
 import { useAuth } from "@/contexts/AuthContext";
 import heroPhone from "@/assets/hero-phone.png";
