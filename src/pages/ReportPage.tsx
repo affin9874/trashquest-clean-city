@@ -51,11 +51,43 @@ const ReportPage = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [pics, setPics] = useState<Pic[]>([]);
+  const [video, setVideo] = useState<{ file: File; preview: string } | null>(null);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(null);
   const [address, setAddress] = useState("");
   const [note, setNote] = useState("");
   const [loadingGeo, setLoadingGeo] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  // ── จำกัด VDO ให้เล็กที่สุด แต่ AI ยังวิเคราะห์ได้ ─────────────────
+  // ยอมรับ ≤ 10 วินาที และ ≤ 8MB เพื่อประหยัด Storage + bandwidth
+  const VIDEO_MAX_BYTES = 8 * 1024 * 1024;
+  const VIDEO_MAX_SECONDS = 10;
+
+  const onVideo = (files: FileList | null) => {
+    if (!files?.[0]) return;
+    const f = files[0];
+    if (!f.type.startsWith("video/")) { toast.error("ต้องเป็นไฟล์วิดีโอ"); return; }
+    if (f.size > VIDEO_MAX_BYTES) { toast.error(`วิดีโอใหญ่เกิน ${VIDEO_MAX_BYTES / 1024 / 1024}MB`); return; }
+    const url = URL.createObjectURL(f);
+    const el = document.createElement("video");
+    el.preload = "metadata";
+    el.onloadedmetadata = () => {
+      if (el.duration > VIDEO_MAX_SECONDS + 0.5) {
+        URL.revokeObjectURL(url);
+        toast.error(`วิดีโอยาวเกิน ${VIDEO_MAX_SECONDS} วินาที`);
+        return;
+      }
+      setVideo({ file: f, preview: url });
+      toast.success("เพิ่มวิดีโอแล้ว 🎬");
+    };
+    el.onerror = () => { URL.revokeObjectURL(url); toast.error("อ่านวิดีโอไม่ได้"); };
+    el.src = url;
+  };
+
+  const removeVideo = () => {
+    if (video) URL.revokeObjectURL(video.preview);
+    setVideo(null);
+  };
 
   const onFiles = async (files: FileList | null) => {
     if (!files) return;
