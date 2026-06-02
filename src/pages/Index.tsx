@@ -132,7 +132,7 @@ const Index = () => {
               </span>{" "}
               Into
               <br />
-              <span className="text-brand-green-soft [text-shadow:0_2px_18px_rgba(0,0,0,0.6)]">Impact.</span>
+              <span className="text-emerald-300 [text-shadow:0_2px_18px_rgba(0,0,0,0.7)]">Impact.</span>
             </h2>
             <p className="mt-6 max-w-xl text-base font-medium text-white sm:text-lg [text-shadow:0_1px_12px_rgba(0,0,0,0.6)]">
               ทุกชิ้นที่คุณเก็บ คือก้าวเล็กๆ ที่เปลี่ยนเมือง — รวมพลังคน เทคโนโลยี และเกม ให้กลายเป็นพลังจริง
