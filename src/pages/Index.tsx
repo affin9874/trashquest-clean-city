@@ -11,6 +11,7 @@ import heroPhone from "@/assets/hero-phone.png";
 import solMap from "@/assets/sol-map.png";
 import solGame from "@/assets/sol-game.png";
 import solAi from "@/assets/sol-ai.png";
+import heroImpact from "@/assets/hero-impact.jpg";
 
 const Index = () => {
   const { user } = useAuth();
@@ -93,6 +94,41 @@ const Index = () => {
               <div className="text-xs font-medium text-ink-soft">แต้มวันนี้</div>
               <div className="text-2xl font-extrabold text-brand-amber">+ 320</div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* IMPACT BANNER */}
+      <section className="relative overflow-hidden">
+        <div className="relative h-[60vh] min-h-[460px] w-full">
+          <img
+            src={heroImpact}
+            alt="ชุมชนอาสาสมัครร่วมกันเก็บขยะในเมือง"
+            width={1920}
+            height={1080}
+            className="absolute inset-0 h-full w-full object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/60 to-ink/30" aria-hidden />
+          <div className="absolute inset-0 bg-gradient-to-r from-ink/70 via-transparent to-transparent" aria-hidden />
+
+          <div className="container relative z-10 flex h-full flex-col justify-center">
+            <span className="inline-flex w-fit items-center gap-2 rounded-full border border-background/30 bg-background/10 px-4 py-1.5 text-xs font-bold uppercase tracking-[0.25em] text-background backdrop-blur">
+              <span className="h-1.5 w-1.5 rounded-full bg-brand-amber" /> Our Mission
+            </span>
+            <h2 className="mt-6 max-w-4xl font-display text-[clamp(2.75rem,8vw,6.5rem)] font-black uppercase leading-[0.95] tracking-tight text-background">
+              Transform
+              <br />
+              <span className="relative inline-block">
+                <span className="relative z-10">Waste</span>
+                <span className="absolute -inset-x-2 bottom-1 z-0 h-3 bg-brand-amber sm:h-4" aria-hidden />
+              </span>{" "}
+              Into
+              <br />
+              <span className="text-brand-green">Impact.</span>
+            </h2>
+            <p className="mt-6 max-w-xl text-base text-background/85 sm:text-lg">
+              ทุกชิ้นที่คุณเก็บ คือก้าวเล็กๆ ที่เปลี่ยนเมือง — รวมพลังคน เทคโนโลยี และเกม ให้กลายเป็นพลังจริง
+            </p>
           </div>
         </div>
       </section>
