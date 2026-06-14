@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { AppHeader } from "@/components/AppHeader";
-import { Camera, ImagePlus, MapPin, Trash2, Sparkles, X, Loader2, Video as VideoIcon } from "lucide-react";
+import { Camera, MapPin, Trash2, Sparkles, X, Loader2, Video as VideoIcon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
