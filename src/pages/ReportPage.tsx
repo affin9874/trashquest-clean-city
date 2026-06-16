@@ -185,23 +185,26 @@ const ReportPage = () => {
 
   const submit = async () => {
     if (!user) { navigate("/auth"); return; }
-    if (!coords1) { toast.error("ยังไม่ได้เริ่มภารกิจ"); return; }
-    if (pics.length < MIN) { toast.error(`ต้องมีรูปอย่างน้อย ${MIN} รูป`); return; }
+    if (!coords1) { fail("ยังไม่ได้เริ่มภารกิจ"); return; }
+    if (pics.length < MIN) { fail(`ต้องมีรูปอย่างน้อย ${MIN} รูป`); return; }
 
     setSubmitting(true);
+    setLastError(null);
     try {
       // ── GPS รอบ 2 ───────────────────────────────────────────────
       toast.loading("กำลังยืนยันตำแหน่งอีกครั้ง...", { id: "gps2" });
       const c2 = await getGPS();
       toast.dismiss("gps2");
 
+      const drift = haversine(coords1, c2);
+      setGpsCheck({ accuracy: c2.accuracy, drift });
+
       if (c2.accuracy > MAX_ACCURACY_M) {
-        toast.error(`สัญญาณ GPS อ่อนเกินไป (±${Math.round(c2.accuracy)}m) ออกที่โล่งแล้วลองใหม่`);
+        fail(`สัญญาณ GPS อ่อนเกินไป (±${Math.round(c2.accuracy)}m, ต้อง ≤${MAX_ACCURACY_M}m) ออกที่โล่งแล้วลองใหม่`);
         return;
       }
-      const drift = haversine(coords1, c2);
       if (drift > MAX_GPS_DRIFT_M) {
-        toast.error(`คุณห่างจากจุดเริ่มภารกิจ ${Math.round(drift)}m เกินกำหนด เริ่มภารกิจใหม่`);
+        fail(`คุณห่างจากจุดเริ่มภารกิจ ${Math.round(drift)}m (เกิน ${MAX_GPS_DRIFT_M}m) เริ่มภารกิจใหม่`);
         return;
       }
 
@@ -217,7 +220,7 @@ const ReportPage = () => {
         (d) => haversine({ lat: d.lat, lng: d.lng }, c2) <= DUP_RADIUS_M
       );
       if (samePoint && samePoint.attempt_count >= MAX_DUP_PER_MONTH) {
-        toast.error(`จุดนี้คุณส่งครบ ${MAX_DUP_PER_MONTH} ครั้งของเดือนนี้แล้ว รอเดือนหน้านะ`);
+        fail(`จุดนี้คุณส่งครบ ${MAX_DUP_PER_MONTH} ครั้งของเดือนนี้แล้ว รอเดือนหน้านะ`);
         return;
       }
 
