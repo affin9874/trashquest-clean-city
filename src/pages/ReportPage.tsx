@@ -357,6 +357,44 @@ const ReportPage = () => {
               </CardContent>
             </Card>
 
+            {/* GPS diagnostic */}
+            <Card className="mt-4">
+              <CardContent className="flex flex-wrap items-center gap-3 p-4 text-sm">
+                <MapPin className="h-5 w-5 shrink-0 text-brand-green" />
+                <div className="flex-1 min-w-[180px]">
+                  <p className="font-semibold">ความแม่น GPS</p>
+                  {gpsCheck ? (
+                    <p className={`text-xs ${gpsCheck.accuracy <= MAX_ACCURACY_M ? "text-brand-green" : "text-red-500"}`}>
+                      ±{Math.round(gpsCheck.accuracy)}m
+                      {gpsCheck.drift !== null && <> · ห่างจุดเริ่ม {Math.round(gpsCheck.drift)}m</>}
+                      {" "}(ต้อง ≤{MAX_ACCURACY_M}m, drift ≤{MAX_GPS_DRIFT_M}m)
+                    </p>
+                  ) : (
+                    <p className="text-xs text-ink-soft">กดตรวจสอบเพื่อดูคุณภาพสัญญาณก่อนส่ง</p>
+                  )}
+                </div>
+                <Button size="sm" variant="outline" onClick={checkGps} disabled={checkingGps}>
+                  {checkingGps ? <Loader2 className="h-4 w-4 animate-spin" /> : "ตรวจ GPS"}
+                </Button>
+              </CardContent>
+            </Card>
+
+            {lastError && (
+              <Card className="mt-4 border-red-500/40 bg-red-500/5">
+                <CardContent className="flex items-start gap-3 p-4 text-sm">
+                  <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-red-500" />
+                  <div className="flex-1">
+                    <p className="font-semibold text-red-500">ส่งไม่ผ่าน</p>
+                    <p className="text-ink-soft">{lastError}</p>
+                  </div>
+                  <button onClick={() => setLastError(null)} className="text-ink-soft hover:text-ink">
+                    <X className="h-4 w-4" />
+                  </button>
+                </CardContent>
+              </Card>
+            )}
+
+
             <Card className="mt-4">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
