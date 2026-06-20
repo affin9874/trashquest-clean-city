@@ -5,7 +5,8 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: process.env.GITHUB_PAGES === "true" ? "/trashquest-clean-city/" : "/",
+  //  แก้ไขบรรทัดนี้: เปลี่ยนจาก GITHUB_PAGES เป็น GITHUB_ACTIONS
+  base: process.env.GITHUB_ACTIONS === "true" ? "/trashquest-clean-city/" : "/",
   server: {
     host: "::",
     port: 8080,
